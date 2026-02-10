@@ -1,1 +1,9 @@
 /Library
+/Logs
+/ProjectSettings
+/Temp
+/.vs
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+.vsconfig
+Foggy_Ruins.sln
