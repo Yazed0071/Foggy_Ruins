@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public sealed class GkEventTimerManager : MonoBehaviour
         public bool IsPaused;
         public bool IsActive;
         public bool IsRaw;
+        public Action OnFinished;
     }
 
     private static GkEventTimerManager _instance;
@@ -71,6 +73,20 @@ public sealed class GkEventTimerManager : MonoBehaviour
             {
                 timer.Remaining = 0f;
                 timer.IsActive = false;
+
+                Action callback = timer.OnFinished;
+                if (callback != null)
+                {
+                    try
+                    {
+                        callback.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError("GkEventTimerManager callback error on timer '" + name + "': " + ex);
+                    }
+                }
+
                 Debug.Log("Timer finished: " + name);
             }
         }
@@ -99,40 +115,12 @@ public sealed class GkEventTimerManager : MonoBehaviour
 
     public static void Start(string name, float duration)
     {
-        EnsureInstance();
-
-        if (string.IsNullOrEmpty(name))
-            return;
-
-        if (duration <= 0f)
-            return;
-
-        TimerData timer = new TimerData();
-        timer.Remaining = duration;
-        timer.IsPaused = false;
-        timer.IsActive = true;
-        timer.IsRaw = false;
-
-        _timers[name] = timer;
+        Start(name, duration, null);
     }
 
     public static void StartRaw(string name, float duration)
     {
-        EnsureInstance();
-
-        if (string.IsNullOrEmpty(name))
-            return;
-
-        if (duration <= 0f)
-            return;
-
-        TimerData timer = new TimerData();
-        timer.Remaining = duration;
-        timer.IsPaused = false;
-        timer.IsActive = true;
-        timer.IsRaw = true; // unscaled time
-
-        _timers[name] = timer;
+        StartRaw(name, duration, null);
     }
 
     public static bool IsTimerActive(string name)
@@ -148,6 +136,57 @@ public sealed class GkEventTimerManager : MonoBehaviour
         return false;
     }
 
+    public static void Start(string name, float duration, Action onFinished)
+    {
+        EnsureInstance();
+
+        if (string.IsNullOrEmpty(name))
+            return;
+
+        if (duration <= 0f)
+            return;
+
+        TimerData timer = new TimerData();
+        timer.Remaining = duration;
+        timer.IsPaused = false;
+        timer.IsActive = true;
+        timer.IsRaw = false;
+        timer.OnFinished = onFinished;
+
+        _timers[name] = timer;
+    }
+
+    public static void StartRaw(string name, float duration, Action onFinished)
+    {
+        EnsureInstance();
+
+        if (string.IsNullOrEmpty(name))
+            return;
+
+        if (duration <= 0f)
+            return;
+
+        TimerData timer = new TimerData();
+        timer.Remaining = duration;
+        timer.IsPaused = false;
+        timer.IsActive = true;
+        timer.IsRaw = true;
+        timer.OnFinished = onFinished;
+
+        _timers[name] = timer;
+    }
+
+    public static void SetOnFinished(string name, Action onFinished)
+    {
+        EnsureInstance();
+
+        TimerData timer;
+        if (_timers.TryGetValue(name, out timer))
+        {
+            timer.OnFinished = onFinished;
+        }
+    }
+
     public static float GetRemaining(string name)
     {
         EnsureInstance();
@@ -159,45 +198,37 @@ public sealed class GkEventTimerManager : MonoBehaviour
         return 0f;
     }
 
-    public static bool IsFinishedAndClear(string name)
+    public static bool Exists(string name)
     {
         EnsureInstance();
+        return _timers.ContainsKey(name);
+    }
 
-        TimerData timer;
-        if (_timers.TryGetValue(name, out timer))
-        {
-            if (!timer.IsActive && timer.Remaining <= 0f)
-            {
-                _timers.Remove(name);
-                return true;
-            }
-        }
-
-        return false;
+    public static void ClearAll()
+    {
+        EnsureInstance();
+        _timers.Clear();
     }
 }
-
-
 
 //Example usage
 /*
-using UnityEngine;
+// Scaled timer with callback
 
-public class EnemyHeliFlow : MonoBehaviour
+Start a timer for 10 seconds and log a message when it finishes
+GkEventTimerManager.Start("CountDown_Target02_Monologue", 10f, () =>
 {
-    private void Start()
-    {
-        GkEventTimerManager.Start("GetInEnemyHeliLimit", 10f);
-    }
+    Debug.Log("Do this when CountDown_Target02_Monologue finishes.");
+});
 
-    private void Update()
-    {
-        // one-time trigger when finished
-        if (GkEventTimerManager.IsFinishedAndClear("GetInEnemyHeliLimit"))
-        {
-            Debug.Log("GetInEnemyHeliLimit finished -> do this now");
-            // DoThis();
-        }
-    }
-}
+// Unscaled timer with callback (Runs normally even if Time.timeScale is 0)
+GkEventTimerManager.StartRaw("CountDown_Target02_Monologue", 10f, () =>
+{
+    Debug.Log("Raw timer finished.");
+});
+
+GkEventTimerManager.Start("CountDown_Target02_Monologue", 10f);
+GkEventTimerManager.SetPaused("Go_Execute", false);
+GkEventTimerManager.Stop("CountDown_Target02_Monologue");
+bool active = GkEventTimerManager.IsTimerActive("CountDown_Target02_Monologue");
 */
