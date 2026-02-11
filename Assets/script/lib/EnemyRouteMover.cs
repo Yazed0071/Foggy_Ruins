@@ -15,6 +15,13 @@ public class EnemyRouteMover : MonoBehaviour
     [SerializeField] private float arriveThreshold = 0.03f;
     [SerializeField] private bool faceMoveDirection = false;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string moveXParam = "MoveX";
+    [SerializeField] private string moveYParam = "MoveY";
+    [SerializeField] private string speedParam = "Speed";
+    
+    
     private EnemyRoute _route;
     private Coroutine _followRoutine;
     private bool _running;
@@ -28,6 +35,7 @@ public class EnemyRouteMover : MonoBehaviour
     {
         enemyName = gameObject.name;
         _enemyAI = GetComponent<EnemyAI>();
+        if (animator == null) animator = GetComponentInChildren<Animator>();
     }
 
 #if UNITY_EDITOR
@@ -138,6 +146,25 @@ public class EnemyRouteMover : MonoBehaviour
 
                 transform.position = next;
 
+                if (animator != null)
+                {
+                    Vector2 dir = new Vector2(delta.x, delta.y);
+                    
+                    
+                    //this stops flickering when idel/stopped
+                    if (dir.sqrMagnitude > 0.00001f)
+                    {
+                        dir.Normalize();
+                        animator.SetFloat(moveXParam, dir.x);
+                        animator.SetFloat(moveYParam, dir.y);
+                    }
+                    
+                    
+                    if (!string.IsNullOrEmpty(speedParam))
+                        animator.SetFloat(speedParam, dir.magnitude);
+                }
+
+                
                 if (faceMoveDirection && delta.sqrMagnitude > 0.000001f)
                 {
                     float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
