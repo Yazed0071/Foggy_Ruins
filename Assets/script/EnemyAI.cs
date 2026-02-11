@@ -70,19 +70,29 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     public static bool SetRoute(string enemyName, string routeName)
     {
-        if (EnemyByName.Count == 0 || RouteByName.Count == 0)
+        if (RouteByName.Count == 0)
             RebuildRegistry();
 
         if (!EnemyByName.TryGetValue(enemyName, out EnemyRouteMover enemy))
         {
-            Debug.LogError($"EnemyAI.SetRoute failed: enemy '{enemyName}' not found.");
-            return false;
+            RebuildRegistry();
+
+            if (!EnemyByName.TryGetValue(enemyName, out enemy))
+            {
+                Debug.LogError($"EnemyAI.SetRoute failed: enemy '{enemyName}' not found.");
+                return false;
+            }
         }
 
         if (!RouteByName.TryGetValue(routeName, out EnemyRoute route))
         {
-            Debug.LogError($"EnemyAI.SetRoute failed: route '{routeName}' not found.");
-            return false;
+            RebuildRegistry();
+
+            if (!RouteByName.TryGetValue(routeName, out route))
+            {
+                Debug.LogError($"EnemyAI.SetRoute failed: route '{routeName}' not found.");
+                return false;
+            }
         }
 
         if (route.Nodes == null || route.Nodes.Count == 0)
@@ -101,13 +111,14 @@ public class EnemyAI : MonoBehaviour
 
     public static bool StopRoute(string enemyName)
     {
-        if (EnemyByName.Count == 0)
-            RebuildRegistry();
-
         if (!EnemyByName.TryGetValue(enemyName, out EnemyRouteMover enemy))
         {
-            Debug.LogError($"EnemyAI.StopRoute failed: enemy '{enemyName}' not found.");
-            return false;
+            RebuildRegistry();
+            if (!EnemyByName.TryGetValue(enemyName, out enemy))
+            {
+                Debug.LogError($"EnemyAI.StopRoute failed: enemy '{enemyName}' not found.");
+                return false;
+            }
         }
 
         enemy.StopRoute();
@@ -116,13 +127,14 @@ public class EnemyAI : MonoBehaviour
 
     public static bool PauseRoute(string enemyName, bool paused)
     {
-        if (EnemyByName.Count == 0)
-            RebuildRegistry();
-
         if (!EnemyByName.TryGetValue(enemyName, out EnemyRouteMover enemy))
         {
-            Debug.LogError($"EnemyAI.PauseRoute failed: enemy '{enemyName}' not found.");
-            return false;
+            RebuildRegistry();
+            if (!EnemyByName.TryGetValue(enemyName, out enemy))
+            {
+                Debug.LogError($"EnemyAI.PauseRoute failed: enemy '{enemyName}' not found.");
+                return false;
+            }
         }
 
         enemy.SetPaused(paused);
@@ -158,5 +170,28 @@ public class EnemyAI : MonoBehaviour
         health -= damageAmount;
         if (health <= 0)Destroy(gameObject);
         
+    }
+
+    public static void RegisterEnemy(EnemyRouteMover mover)
+    {
+        if (mover == null) return;
+        string key = mover.EnemyName;
+        if (string.IsNullOrWhiteSpace(key)) return;
+        EnemyByName[key] = mover;
+    }
+
+    public static void UnregisterEnemy(EnemyRouteMover mover)
+    {
+        if (mover == null) return;
+        string key = mover.EnemyName;
+        if (string.IsNullOrWhiteSpace(key)) return;
+
+        if (EnemyByName.TryGetValue(key, out var existing) && existing == mover)
+            EnemyByName.Remove(key);
+    }
+
+    public void SetHealth(int newHealth)
+    {
+        health = newHealth;
     }
 }

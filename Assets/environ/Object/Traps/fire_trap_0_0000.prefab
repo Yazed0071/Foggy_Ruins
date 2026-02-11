@@ -83,7 +83,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9130008681262292161, guid: 510b9c1242178894a8edc161b6589d8e,
     type: 3}
@@ -183,7 +183,7 @@ MonoBehaviour:
   cooldown: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
   activateTrigger: Activate
 --- !u!1 &9078887917431480632
 GameObject:

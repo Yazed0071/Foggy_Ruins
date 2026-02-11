@@ -20,8 +20,8 @@ public class EnemyRouteMover : MonoBehaviour
     [SerializeField] private string moveXParam = "MoveX";
     [SerializeField] private string moveYParam = "MoveY";
     [SerializeField] private string speedParam = "Speed";
-    
-    
+
+
     private EnemyRoute _route;
     private Coroutine _followRoutine;
     private bool _running;
@@ -149,8 +149,8 @@ public class EnemyRouteMover : MonoBehaviour
                 if (animator != null)
                 {
                     Vector2 dir = new Vector2(delta.x, delta.y);
-                    
-                    
+
+
                     //this stops flickering when idel/stopped
                     if (dir.sqrMagnitude > 0.00001f)
                     {
@@ -158,13 +158,13 @@ public class EnemyRouteMover : MonoBehaviour
                         animator.SetFloat(moveXParam, dir.x);
                         animator.SetFloat(moveYParam, dir.y);
                     }
-                    
-                    
+
+
                     if (!string.IsNullOrEmpty(speedParam))
                         animator.SetFloat(speedParam, dir.magnitude);
                 }
 
-                
+
                 if (faceMoveDirection && delta.sqrMagnitude > 0.000001f)
                 {
                     float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
@@ -189,5 +189,16 @@ public class EnemyRouteMover : MonoBehaviour
         if (currentIndex < last) return currentIndex + 1;
         return _route.loop ? 0 : -1;
     }
-    
+
+    public void SetEnemyName(string newName)
+    {
+        if (string.IsNullOrWhiteSpace(newName))
+        {
+            Debug.LogWarning("Enemy name cannot be empty. Ignored.");
+            return;
+        }
+        enemyName = newName;
+        gameObject.name = newName;
+    }
+
 }
