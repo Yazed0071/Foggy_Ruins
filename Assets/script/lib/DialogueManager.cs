@@ -4,62 +4,86 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI textComponent;
-    public string[] lines;
-    public float textSpeed = 0.05f;
+    [Header("UI")]
+    [SerializeField] private GameObject dialogueBox;   // assign your panel/background here
+    [SerializeField] private TextMeshProUGUI textComponent;
+
+    [Header("Dialogue")]
+    [SerializeField] private string[] lines;
+    [SerializeField] private float textSpeed = 0.05f;
 
     private int index = 0;
+    private Coroutine typingCoroutine;
 
-    void Start()
+    private void Start()
     {
+        if (dialogueBox != null)
+            dialogueBox.SetActive(true);
+
+        if (textComponent == null)
+        {
+            Debug.LogError("DialogueManager: textComponent is not assigned.");
+            return;
+        }
+
+        if (lines == null || lines.Length == 0)
+        {
+            EndDialogue();
+            return;
+        }
+
         textComponent.text = string.Empty;
         StartDialogue();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
+        if (lines == null || lines.Length == 0) return;
     }
 
     public void StartDialogue()
     {
         index = 0;
-        StartCoroutine(TypeLine());
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        typingCoroutine = StartCoroutine(TypeLine());
     }
 
-    IEnumerator TypeLine()
+    private IEnumerator TypeLine()
     {
         textComponent.text = string.Empty;
 
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in lines[index])
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+
+        typingCoroutine = null;
     }
 
-    void NextLine()
+    private void NextLine()
     {
         if (index < lines.Length - 1)
         {
             index++;
-            StartCoroutine(TypeLine());
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            typingCoroutine = StartCoroutine(TypeLine());
         }
         else
         {
-            gameObject.SetActive(false);
+            EndDialogue();
         }
+    }
+
+    private void EndDialogue()
+    {
+        if (dialogueBox != null)
+            dialogueBox.SetActive(false);
+        else
+            gameObject.SetActive(false);
     }
 }
