@@ -3,30 +3,33 @@ using UnityEngine;
 
 public class TrapKiller : MonoBehaviour, IClickable
 {
+    [SerializeField] protected int damageAmount = 1;
     [Header("Refs")]
-    [SerializeField] private Collider2D frontKillZone;
-    [SerializeField] private Animator animator;
+    [SerializeField] protected Collider2D frontKillZone;
+    [SerializeField] protected Animator animator;
 
 
     [Header("Timing")]
-    [SerializeField] private float activeDuration = 1.0f;
-    [SerializeField] private float cooldown = 1.0f;
+    [SerializeField] protected float activeDuration = 1.0f;
+    [SerializeField] protected float cooldown = 1.0f;
 
 
     [Header("Filter")]
-    [SerializeField] private LayerMask enemyMask;
+    [SerializeField] protected LayerMask enemyMask;
 
 
     [Header("Animation")]
-    [SerializeField] private string activateTrigger = "Activate";
+    [SerializeField] protected string activateTrigger = "Activate";
 
 
-    private bool isActive;
-    private bool isOnCooldown;
+    protected bool isActive;
+    protected bool isOnCooldown;
 
 
     public void OnClicked()
     {
+        Debug.Log("CLICKED: " + name + " (" + GetType().Name + ")");
+
         if (isOnCooldown)
         {
             Debug.Log("Trap on cooldown");
@@ -36,7 +39,7 @@ public class TrapKiller : MonoBehaviour, IClickable
     }
 
 
-    private IEnumerator ActivateRoutine()
+    protected virtual IEnumerator ActivateRoutine()
     {
         isOnCooldown = true;
         isActive = true;
@@ -69,7 +72,7 @@ public class TrapKiller : MonoBehaviour, IClickable
     }
 
 
-    private void KillEnemiesCurrentlyInsideZone()
+    protected void KillEnemiesCurrentlyInsideZone()
     {
         if (frontKillZone == null)
         {
@@ -96,7 +99,7 @@ public class TrapKiller : MonoBehaviour, IClickable
     }
 
 
-    private void TryKill(Collider2D other)
+    protected void TryKill(Collider2D other)
     {
         if (((1 << other.gameObject.layer) & enemyMask) == 0) return;
 
@@ -105,6 +108,6 @@ public class TrapKiller : MonoBehaviour, IClickable
         if (e == null) e = other.GetComponentInParent<EnemyAI>();
 
 
-        if (e != null) e.Kill();
+        if (e != null) e.DealDamage(damageAmount);
     }
 }

@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Enemy Stats")]
+    [SerializeField] private int health;
+    
     // ---------- Per-enemy runtime/inspector ----------
     [Header("Runtime (Read Only)")]
     [SerializeField] private string currentRoute = "None";
@@ -149,9 +152,11 @@ public class EnemyAI : MonoBehaviour
             Debug.Log($"[EnemyAI] Route: {r}");
     }
 
-    public void Kill()
+    public void DealDamage(int damageAmount)
     {
-        Debug.Log("Enemy killed: " + gameObject.name);
-        Destroy(gameObject);
+        Debug.Log("Enemy Damaged: " + gameObject.name + "Damage ammount: " + damageAmount);
+        health -= damageAmount;
+        if (health <= 0)Destroy(gameObject);
+        
     }
 }

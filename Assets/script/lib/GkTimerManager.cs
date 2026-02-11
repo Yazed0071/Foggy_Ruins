@@ -4,6 +4,7 @@ using UnityEngine;
 
 public sealed class GkEventTimerManager : MonoBehaviour
 {
+    
     private sealed class TimerData
     {
         public float Remaining;
@@ -24,12 +25,24 @@ public sealed class GkEventTimerManager : MonoBehaviour
 
     private static void EnsureInstance()
     {
-        if (_instance != null)
-            return;
-
+        if (_instance != null) return;
+        if (_isQuitting) return;
+        
         GameObject go = new GameObject("[GkEventTimerManager]");
         DontDestroyOnLoad(go);
         _instance = go.AddComponent<GkEventTimerManager>();
+    }
+    
+    private static bool _isQuitting;
+
+    private void OnApplicationQuit() => _isQuitting = true;
+
+    private void OnDestroy()
+    {
+        // In play mode stop, OnDestroy can happen during teardown
+        _isQuitting = true;
+
+        if (_instance == this) _instance = null;
     }
 
     private void Update()

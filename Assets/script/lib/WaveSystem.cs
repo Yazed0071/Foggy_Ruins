@@ -8,6 +8,7 @@ public class WaveSystem : MonoBehaviour
     private void Start()
     {
         StartSpawnTimer();
+        EnemyAI.SetRoute("ENEMY_SAMPLE", "rt_spawn_0000");
     }
 
 

@@ -22,16 +22,26 @@ public class TrapClickController2D : MonoBehaviour
         Vector2 p = new Vector2(w.x, w.y);
 
 
-        Collider2D hit = Physics2D.OverlapPoint(p, clickableMask);
-        if (hit == null) return;
+        Collider2D[] hits = Physics2D.OverlapPointAll(p, clickableMask);
+        if (hits == null || hits.Length == 0) return;
+        
+        
+        Collider2D best = hits[0];
+        int bestOrder = int.MinValue;
 
-
-        if (hit.TryGetComponent<IClickable>(out var c))
-            c.OnClicked();
-        else
+        for (int i = 0; i < hits.Length; i++)
         {
-            c = hit.GetComponentInParent<IClickable>();
-            if (c != null) c.OnClicked();
+            var sr = hits[i].GetComponentInParent<SpriteRenderer>();
+            int order = sr != null ? sr.sortingOrder : 0;
+
+            if (order > bestOrder)
+            {
+                bestOrder = order;
+                best = hits[i];
+            }
         }
+
+        var clickable = best.GetComponentInParent<IClickable>();
+        clickable?.OnClicked();
     }
 }

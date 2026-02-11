@@ -176,13 +176,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e4debd4cc2c2e468066e3aa7d5a2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapKiller
+  damageAmount: 1
   frontKillZone: {fileID: 7036976844892700420}
   animator: {fileID: 1186987114766376213}
   activeDuration: 1
   cooldown: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   activateTrigger: Activate
 --- !u!1 &9078887917431480632
 GameObject:
