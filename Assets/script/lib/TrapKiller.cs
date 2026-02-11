@@ -26,6 +26,9 @@ public class TrapKiller : MonoBehaviour, IClickable
     protected bool isOnCooldown;
 
 
+    [SerializeField] private FireSound fire;
+
+
     public void OnClicked()
     {
         Debug.Log("CLICKED: " + name + " (" + GetType().Name + ")");
@@ -36,6 +39,7 @@ public class TrapKiller : MonoBehaviour, IClickable
             return;
         }
         StartCoroutine(ActivateRoutine());
+        fire.fireStart();
     }
 
 
