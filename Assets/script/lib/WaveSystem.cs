@@ -20,6 +20,7 @@ public class WaveSystem : MonoBehaviour
     private void Start()
     {
         StartSpawnTimer();
+        EnemyAI.SetRoute("ENEMY_SAMPLE_ANIMATED","rt_North_0");
     }
 
 
