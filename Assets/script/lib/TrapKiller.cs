@@ -105,9 +105,9 @@ public class TrapKiller : MonoBehaviour, IClickable
 
     protected void TryKill(Collider2D other)
     {
-        Debug.Log("TryKill: " + name + " (" + GetType().Name + ")");
         if (((1 << other.gameObject.layer) & enemyMask) == 0) return;
-        
+        Debug.Log("TryKill: " + name + " (" + GetType().Name + ")");
+
 
         EnemyAI e = other.GetComponent<EnemyAI>();
         if (e == null) e = other.GetComponentInParent<EnemyAI>();

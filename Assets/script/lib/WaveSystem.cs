@@ -7,6 +7,7 @@ public class WaveSystem : MonoBehaviour
 
     [Header("Prefab")]
     [SerializeField] private GameObject enemyPrefab;
+    
 
     [Header("Spawn")]
     [SerializeField] private Vector3 spawnPosition = new(-31.48f, -4.81f, 1f);
@@ -65,7 +66,7 @@ public class WaveSystem : MonoBehaviour
         }
 
 
-        eAI.SetHealth(5);
+        //eAI.SetHealth(5);
         eRoute.SetEnemyName(enemyName);
 
 
