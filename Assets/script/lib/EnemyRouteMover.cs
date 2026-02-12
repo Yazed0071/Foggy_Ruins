@@ -17,6 +17,9 @@ public class EnemyRouteMover : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
+    //NEW
+    [SerializeField] private string attackParam = "Attack";
+
     [SerializeField] private string moveXParam = "MoveX";
     [SerializeField] private string moveYParam = "MoveY";
     [SerializeField] private string speedParam = "Speed";
@@ -81,6 +84,8 @@ public class EnemyRouteMover : MonoBehaviour
         _paused = false;
         _enemyAI?.SetCurrentRouteDebug("None");
 
+
+
         if (_followRoutine != null)
         {
             StopCoroutine(_followRoutine);
@@ -109,6 +114,11 @@ public class EnemyRouteMover : MonoBehaviour
                 yield break;
 
             RouteNode node = _route.Nodes[index];
+
+            bool isLastNode = (index == _route.Nodes.Count - 1);
+
+            
+
             if (node == null)
             {
                 index = NextIndex(index);
@@ -147,6 +157,17 @@ public class EnemyRouteMover : MonoBehaviour
 
                 transform.position = next;
 
+                if (Vector2.Distance(transform.position, target) <= arriveThreshold)
+                {
+                    // If it's the last node and the route doesn't loop (or even if it does)
+                    if (isLastNode)
+                    {
+                        PerformAttack();
+                    }
+                    break;
+                }
+                yield return null;
+
                 if (animator != null)
                 {
                     Vector2 dir = new Vector2(delta.x, delta.y);
@@ -182,6 +203,17 @@ public class EnemyRouteMover : MonoBehaviour
             if (!_route.loop && index == -1)
                 yield break;
         }
+    }
+
+    private void PerformAttack()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(attackParam); // Plays the animation
+        }
+
+        // Add your custom logic here (e.g., spawning a hitbox or projectile)
+        Debug.Log($"{enemyName} is attacking at the final node!");
     }
 
     private int NextIndex(int currentIndex)
