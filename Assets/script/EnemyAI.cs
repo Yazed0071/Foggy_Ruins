@@ -5,6 +5,7 @@ using UnityEngine;
 /// Static route API + per-enemy Kill() component.
 /// Also shows current route in Inspector (read-only).
 /// </summary>
+/// </summary>
 public class EnemyAI : MonoBehaviour
 {
     [Header("Enemy Stats")]

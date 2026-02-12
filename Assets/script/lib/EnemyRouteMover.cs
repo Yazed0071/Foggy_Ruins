@@ -143,7 +143,6 @@ public class EnemyRouteMover : MonoBehaviour
             while (_running && node != null)
             {
                 Debug.Log("SetSpeed");
-                animator.SetFloat(speedParam, 0);
 
                 if (_paused)
                 {
@@ -162,6 +161,9 @@ public class EnemyRouteMover : MonoBehaviour
 
                 if (Vector2.Distance(transform.position, target) <= arriveThreshold)
                 {
+
+                    if (animator != null)
+                        animator.SetFloat(speedParam, 0f);
                     // If it's the last node and the route doesn't loop (or even if it does)
                     if (index == _route.Nodes.Count - 1 && !_route.loop)
                     {
@@ -211,12 +213,30 @@ public class EnemyRouteMover : MonoBehaviour
 
     private IEnumerator PerformAttack()
     {
-        yield return new WaitForSeconds(0.5f);
-        if (animator != null);
+        Debug.Log("PerformAttack triggered");
+
+        animator.SetFloat(speedParam, 0f);
         animator.SetBool("Attacking?", true);
-        // Add your custom logic here (e.g., spawning a hitbox or projectile)
-        Debug.Log($"{enemyName} is attacking at the final node!");
+
+        _running = false;
+
+        if (animator != null)
+        {
+            animator.SetBool("Attacking?", true);
+            animator.SetFloat(speedParam, 0f); // stop movement animation
+        }
+
+        yield return new WaitForSeconds(1f); // match attack animation length
+
+        GuardianHealth guardian = FindFirstObjectByType<GuardianHealth>();
+        if (guardian != null)
+        {
+            guardian.TakeDamage(1);
+        }
+
+        Destroy(gameObject);
     }
+
 
     private int NextIndex(int currentIndex)
     {

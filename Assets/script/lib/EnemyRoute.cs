@@ -16,7 +16,7 @@ public class EnemyRoute : MonoBehaviour
     [SerializeField] private string routeName;
 
     [Tooltip("If true, last node links back to first node")]
-    public bool loop = true;
+    public bool loop = false;
 
     [Header("2D Gizmo")]
     public bool drawGizmos = true;
