@@ -122,7 +122,7 @@ public class EnemyAI : MonoBehaviour
                 return false;
             }
         }
-        Debug.Log("Hit Here!!");
+        
         enemy.StopRoute();
         return true;
     }

@@ -25,6 +25,7 @@ public class EnemyRouteMover : MonoBehaviour
     [SerializeField] private string speedParam = "Speed";
 
 
+
     private EnemyRoute _route;
     private Coroutine _followRoutine;
     private bool _running;
@@ -51,7 +52,6 @@ public class EnemyRouteMover : MonoBehaviour
 
     public void AssignRoute(EnemyRoute route)
     {
-
         _route = route;
         _enemyAI?.SetCurrentRouteDebug(_route != null ? _route.RouteName : "None");
 
@@ -142,6 +142,9 @@ public class EnemyRouteMover : MonoBehaviour
             // Move toward node with node-specific speed
             while (_running && node != null)
             {
+                Debug.Log("SetSpeed");
+                animator.SetFloat(speedParam, 0);
+
                 if (_paused)
                 {
                     yield return null;
@@ -160,9 +163,10 @@ public class EnemyRouteMover : MonoBehaviour
                 if (Vector2.Distance(transform.position, target) <= arriveThreshold)
                 {
                     // If it's the last node and the route doesn't loop (or even if it does)
-                    if (isLastNode)
+                    if (index == _route.Nodes.Count - 1 && !_route.loop)
                     {
-                        PerformAttack();
+                        StartCoroutine(PerformAttack());
+                        yield break; // Stop moving
                     }
                     break;
                 }
@@ -173,7 +177,7 @@ public class EnemyRouteMover : MonoBehaviour
                     Vector2 dir = new Vector2(delta.x, delta.y);
 
 
-                    //this stops flickering when idel/stopped
+                    //this stops flickering when idle/stopped
                     if (dir.sqrMagnitude > 0.00001f)
                     {
                         dir.Normalize();
@@ -205,13 +209,11 @@ public class EnemyRouteMover : MonoBehaviour
         }
     }
 
-    private void PerformAttack()
+    private IEnumerator PerformAttack()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger(attackParam); // Plays the animation
-        }
-
+        yield return new WaitForSeconds(0.5f);
+        if (animator != null);
+        animator.SetBool("Attacking?", true);
         // Add your custom logic here (e.g., spawning a hitbox or projectile)
         Debug.Log($"{enemyName} is attacking at the final node!");
     }

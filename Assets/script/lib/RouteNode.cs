@@ -12,6 +12,9 @@ public class RouteNode : MonoBehaviour
     [Min(0f)] public float speed = 100f;
     [Min(0f)] public float delay = 3f;
 
+    [SerializeField] private Animator animator;
+    
+
 
     private void OnDrawGizmos()
     {
