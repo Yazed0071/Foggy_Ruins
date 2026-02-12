@@ -2,29 +2,27 @@ using UnityEngine;
 
 public class pauseMenu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    private bool GamePaused = false;
-
+    [Header("UI")]
     public GameObject pauseMenuUI;
 
-    // Update is called once per frame
+    [Header("Credits")]
+    [SerializeField] private CreditsVideoController creditsVideo;
+
+    private bool GamePaused = false;
+    private bool isShowingCredits = false;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GamePaused)
+            if (isShowingCredits)
             {
-                Resume();
+                CloseCredits();
+                return;
             }
-            else
-            {
-                Pause();
-            }
+
+            if (GamePaused) Resume();
+            else Pause();
         }
     }
 
@@ -33,7 +31,7 @@ public class pauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
-        AudioListener.pause = GamePaused;
+        AudioListener.pause = false;
     }
 
     void Pause()
@@ -41,7 +39,27 @@ public class pauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GamePaused = true;
-        AudioListener.pause = GamePaused;
+        AudioListener.pause = true;
+    }
+
+    public void Credits()
+    {
+        AudioListener.pause = true;
+
+        pauseMenuUI.SetActive(false);
+        GamePaused = false;
+
+        isShowingCredits = true;
+        creditsVideo.PlayVideo();
+    }
+
+    public void CloseCredits()
+    {
+        creditsVideo.StopVideo(hide: true);
+        isShowingCredits = false;
+
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
     }
 
     public void QuitGame()

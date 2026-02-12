@@ -8,6 +8,9 @@ public class VictoryMenu : MonoBehaviour
     private bool gamePaused = false;
     private bool isShowing = false;
 
+    private bool GamePaused = false;
+    private bool isShowingCredits = false;
+
 
     public void Show(bool show)
     {
@@ -19,6 +22,18 @@ public class VictoryMenu : MonoBehaviour
         gamePaused = show;
         Time.timeScale = show ? 0f : 1f;
         AudioListener.pause = gamePaused;
+    }
+
+    [SerializeField] private CreditsVideoController creditsVideo;
+    public void Credits()
+    {
+        AudioListener.pause = true;
+
+        victoryMenuUI.SetActive(false);
+        GamePaused = false;
+
+        isShowingCredits = true;
+        creditsVideo.PlayVideo();
     }
 
     public void QuitGame()
