@@ -415,12 +415,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 64
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (3)
+      value: fire_trap_0_0003
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -496,6 +496,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12295,6 +12300,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 272250427}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &273524804 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 7036976844892700420, guid: 3584bd66a021cfa4b94920fa67351387,
+    type: 3}
+  m_PrefabInstance: {fileID: 2012224078}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &277464934 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: 8fd7cba4384381e4aad6dc90158fc9d5,
@@ -14082,6 +14093,7 @@ Transform:
   - {fileID: 227883966}
   - {fileID: 435674055}
   - {fileID: 1846218091}
+  - {fileID: 1324263316}
   m_Father: {fileID: 847132129}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &717948281
@@ -14115,12 +14127,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 64
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (6)
+      value: fire_trap_0_0006
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -14196,6 +14208,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18649,7 +18666,7 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 64
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -19090,12 +19107,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 64
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (4)
+      value: fire_trap_0_0004
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -19171,6 +19188,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20761,12 +20783,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (7)
+      value: fire_trap_0_0007
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -20842,6 +20864,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0007
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24458,12 +24485,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 64
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (2)
+      value: fire_trap_0_0002
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -24539,6 +24566,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25210,12 +25242,12 @@ PrefabInstance:
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (5)
+      value: fire_trap_0_0005
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -25291,6 +25323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25417,13 +25454,18 @@ PrefabInstance:
       objectReference: {fileID: 692909411}
     - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
+      propertyPath: frontKillZone
+      value: 
+      objectReference: {fileID: 273524804}
+    - target: {fileID: 4732911677265036499, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
       propertyPath: enemyMask.m_Bits
-      value: 0
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
       propertyPath: m_Name
-      value: fire_trap_0_0000 (1)
+      value: fire_trap_0_0001
       objectReference: {fileID: 0}
     - target: {fileID: 6358724051475783927, guid: 3584bd66a021cfa4b94920fa67351387,
         type: 3}
@@ -25499,6 +25541,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078887917431480632, guid: 3584bd66a021cfa4b94920fa67351387,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontKillZone_0_0001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25642,7 +25689,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 711110848}
     m_Modifications:
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
@@ -25662,12 +25709,12 @@ PrefabInstance:
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.700847
+      value: 10.5132265
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.1064606
+      value: -5.1884108
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
@@ -25682,17 +25729,17 @@ PrefabInstance:
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
@@ -26176,6 +26223,5 @@ SceneRoots:
   - {fileID: 1471145892}
   - {fileID: 680073806}
   - {fileID: 1496779291}
-  - {fileID: 2017810484}
   - {fileID: 721803721}
   - {fileID: 1838917549}

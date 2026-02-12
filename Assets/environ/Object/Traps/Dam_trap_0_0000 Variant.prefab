@@ -113,8 +113,9 @@ MonoBehaviour:
   cooldown: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   activateTrigger: Activate
+  fire: {fileID: 0}
   killZoneTransform: {fileID: 0}
   waterDistance: 0.5
   waterTime: 0.15

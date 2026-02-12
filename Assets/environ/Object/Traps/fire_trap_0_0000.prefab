@@ -183,8 +183,9 @@ MonoBehaviour:
   cooldown: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4294967295
   activateTrigger: Activate
+  fire: {fileID: 0}
 --- !u!1 &9078887917431480632
 GameObject:
   m_ObjectHideFlags: 0
