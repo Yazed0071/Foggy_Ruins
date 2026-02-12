@@ -17,6 +17,8 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 3f;
 
+    private WaveSystem waveSystem;
+
     public string CurrentRoute => string.IsNullOrWhiteSpace(currentRoute) ? "None" : currentRoute;
 
     /// <summary>
@@ -30,6 +32,13 @@ public class EnemyAI : MonoBehaviour
     // ---------- Static registries ----------
     private static readonly Dictionary<string, EnemyRouteMover> EnemyByName = new Dictionary<string, EnemyRouteMover>();
     private static readonly Dictionary<string, EnemyRoute> RouteByName = new Dictionary<string, EnemyRoute>();
+
+    private void Awake()
+    {
+        waveSystem = WaveSystem.Instance;
+        if (waveSystem == null)
+            waveSystem = FindFirstObjectByType<WaveSystem>();
+    }
 
     public static void RebuildRegistry()
     {
@@ -73,25 +82,27 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     public static bool SetRoute(string enemyName, string routeName)
     {
-        if (RouteByName.Count == 0)
+        if (RouteByName.Count == 0 || EnemyByName.Count == 0)
             RebuildRegistry();
 
-        if (!EnemyByName.TryGetValue(enemyName, out EnemyRouteMover enemy))
+        if (!EnemyByName.TryGetValue(enemyName, out EnemyRouteMover enemy) || enemy == null)
         {
+            EnemyByName.Remove(enemyName);
             RebuildRegistry();
 
-            if (!EnemyByName.TryGetValue(enemyName, out enemy))
+            if (!EnemyByName.TryGetValue(enemyName, out enemy) || enemy == null)
             {
-                Debug.LogError($"EnemyAI.SetRoute failed: enemy '{enemyName}' not found.");
+                Debug.LogError($"EnemyAI.SetRoute failed: enemy '{enemyName}' not found or destroyed.");
                 return false;
             }
         }
 
-        if (!RouteByName.TryGetValue(routeName, out EnemyRoute route))
+        if (!RouteByName.TryGetValue(routeName, out EnemyRoute route) || route == null)
         {
+            RouteByName.Remove(routeName);
             RebuildRegistry();
 
-            if (!RouteByName.TryGetValue(routeName, out route))
+            if (!RouteByName.TryGetValue(routeName, out route) || route == null)
             {
                 Debug.LogError($"EnemyAI.SetRoute failed: route '{routeName}' not found.");
                 return false;
@@ -103,7 +114,7 @@ public class EnemyAI : MonoBehaviour
             route.RefreshNodesFromChildren();
             if (route.Nodes.Count == 0)
             {
-                Debug.LogError($"EnemyAI.SetRoute failed: route '{routeName}' has no RouteNode children.");
+                Debug.LogError($"EnemyAI.SetRoute failed: route '{routeName}' has no nodes.");
                 return false;
             }
         }
@@ -111,6 +122,7 @@ public class EnemyAI : MonoBehaviour
         enemy.AssignRoute(route);
         return true;
     }
+
 
     public static bool StopRoute(string enemyName)
     {
@@ -171,7 +183,15 @@ public class EnemyAI : MonoBehaviour
     {
         Debug.Log("Enemy Damaged: " + gameObject.name + "Damage ammount: " + damageAmount);
         health -= damageAmount;
-        if (health <= 0)Destroy(gameObject);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            if (waveSystem != null)
+                waveSystem.DecreaseEnemyCount();
+            else
+                Debug.LogError($"No WaveSystem found in scene. Cannot decrease enemy count for {name}.");
+
+        }
         
     }
 

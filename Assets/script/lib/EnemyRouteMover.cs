@@ -24,6 +24,8 @@ public class EnemyRouteMover : MonoBehaviour
     [SerializeField] private string moveYParam = "MoveY";
     [SerializeField] private string speedParam = "Speed";
 
+    private WaveSystem waveSystem;
+
 
 
     private EnemyRoute _route;
@@ -37,6 +39,10 @@ public class EnemyRouteMover : MonoBehaviour
 
     private void Awake()
     {
+        waveSystem = WaveSystem.Instance;
+        if (waveSystem == null)
+            waveSystem = FindFirstObjectByType<WaveSystem>();
+
         enemyName = gameObject.name;
         _enemyAI = GetComponent<EnemyAI>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
@@ -97,6 +103,17 @@ public class EnemyRouteMover : MonoBehaviour
     {
         _paused = paused;
     }
+
+    private void OnEnable()
+    {
+        EnemyAI.RegisterEnemy(this);
+    }
+
+    private void OnDisable()
+    {
+        EnemyAI.UnregisterEnemy(this);
+    }
+
 
     private IEnumerator FollowRouteRoutine()
     {
@@ -235,6 +252,11 @@ public class EnemyRouteMover : MonoBehaviour
         }
 
         Destroy(gameObject);
+
+        if (waveSystem != null)
+                waveSystem.DecreaseEnemyCount();
+            else
+                Debug.LogError($"No WaveSystem found in scene. Cannot decrease enemy count for {name}.");
     }
 
 

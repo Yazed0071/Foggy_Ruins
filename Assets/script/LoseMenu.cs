@@ -4,28 +4,26 @@ using UnityEngine.SceneManagement;
 public class LoseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject loserMenuUI;
-    [SerializeField] private GuardianHealth guardianHealth; // assign in Inspector or auto-find
+    [SerializeField] private GuardianHealth guardianHealth;
 
     private bool gamePaused = false;
     private bool isShowing = false;
 
     private void Awake()
     {
-        // Optional auto-find if not assigned in inspector
         if (guardianHealth == null)
             guardianHealth = FindFirstObjectByType<GuardianHealth>();
     }
 
     private void Start()
     {
-        Show(false); // make sure menu is hidden at start
+        Show(false);
     }
 
     private void Update()
     {
         if (guardianHealth == null) return;
 
-        // Show once when lose condition is true
         if (!isShowing && guardianHealth.IsShowLoseMenu())
         {
             Show(true);
@@ -57,7 +55,6 @@ public class LoseMenu : MonoBehaviour
 
     public void RestartCurrentScene()
     {
-        // restore timescale/audio before reload to avoid carry-over issues
         Time.timeScale = 1f;
         AudioListener.pause = false;
 

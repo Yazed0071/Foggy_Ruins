@@ -9,6 +9,7 @@ public class GuardianHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 5;
     [SerializeField] private TMP_Text healthText;
+    
 
     private int currentHealth;
 
