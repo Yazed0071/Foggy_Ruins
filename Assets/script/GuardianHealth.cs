@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 
@@ -10,6 +11,8 @@ public class GuardianHealth : MonoBehaviour
     [SerializeField] private TMP_Text healthText;
 
     private int currentHealth;
+
+    private bool playerLost = false;
 
     private void Awake()
     {
@@ -40,7 +43,16 @@ public class GuardianHealth : MonoBehaviour
         Debug.Log("Guardian Dead - You Lose");
 
         Time.timeScale = 0f;
+        playerLost = true;
+        
+    }
 
-        // Optional: show game over text
+    
+
+
+
+    public bool IsShowLoseMenu()
+    {
+        return playerLost;
     }
 }
