@@ -48,6 +48,7 @@ public class EnemyRouteMover : MonoBehaviour
 
     public void AssignRoute(EnemyRoute route)
     {
+
         _route = route;
         _enemyAI?.SetCurrentRouteDebug(_route != null ? _route.RouteName : "None");
 
@@ -68,7 +69,7 @@ public class EnemyRouteMover : MonoBehaviour
             _running = false;
             return;
         }
-
+        
         _running = true;
         _paused = false;
         _followRoutine = StartCoroutine(FollowRouteRoutine());
@@ -116,7 +117,7 @@ public class EnemyRouteMover : MonoBehaviour
                 continue;
             }
 
-            // Delay before moving to this node
+            // Delay before moving to this node --------------------------------------
             if (node.delay > 0f)
             {
                 float t = 0f;
@@ -164,7 +165,7 @@ public class EnemyRouteMover : MonoBehaviour
                         animator.SetFloat(speedParam, dir.magnitude);
                 }
 
-
+                //TEST
                 if (faceMoveDirection && delta.sqrMagnitude > 0.000001f)
                 {
                     float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;

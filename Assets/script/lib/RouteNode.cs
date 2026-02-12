@@ -9,8 +9,8 @@ using UnityEngine;
 public class RouteNode : MonoBehaviour
 {
     [Header("Per-node settings")]
-    [Min(0f)] public float speed = 2.5f;
-    [Min(0f)] public float delay = 0f;
+    [Min(0f)] public float speed = 100f;
+    [Min(0f)] public float delay = 3f;
 
 
     private void OnDrawGizmos()

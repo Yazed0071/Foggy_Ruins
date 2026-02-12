@@ -14,6 +14,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Runtime (Read Only)")]
     [SerializeField] private string currentRoute = "None";
 
+    [SerializeField] private float moveSpeed = 3f;
+
     public string CurrentRoute => string.IsNullOrWhiteSpace(currentRoute) ? "None" : currentRoute;
 
     /// <summary>
