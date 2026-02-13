@@ -51,7 +51,7 @@ public class WaveSystem : MonoBehaviour
 
     private void StartSpawnTimer()
     {
-        GkEventTimerManager.Start("Spawn_Enemy", 3f, () =>
+        TimerEventManager.Start("Spawn_Enemy", 3f, () =>
         {
             if (spawnedCount < totalEnemies && !hasWon)
             {
@@ -66,7 +66,7 @@ public class WaveSystem : MonoBehaviour
 
     private void OnDisable()
     {
-        GkEventTimerManager.Stop("Spawn_Enemy");
+        TimerEventManager.Stop("Spawn_Enemy");
     }
 
     private void SpawnEnemyFromPrefab()
@@ -119,7 +119,7 @@ public class WaveSystem : MonoBehaviour
         hasWon = true;
 
         Debug.Log("Victory! All enemies defeated.");
-        GkEventTimerManager.Stop("Spawn_Enemy");
+        TimerEventManager.Stop("Spawn_Enemy");
 
         if (victoryMenu != null)
             victoryMenu.Show(true);

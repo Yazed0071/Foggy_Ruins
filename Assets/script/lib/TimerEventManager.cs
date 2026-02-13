@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class GkEventTimerManager : MonoBehaviour
+public sealed class TimerEventManager : MonoBehaviour
 {
     
     private sealed class TimerData
@@ -14,7 +14,7 @@ public sealed class GkEventTimerManager : MonoBehaviour
         public Action OnFinished;
     }
 
-    private static GkEventTimerManager _instance;
+    private static TimerEventManager _instance;
     private static readonly Dictionary<string, TimerData> _timers = new Dictionary<string, TimerData>();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -28,9 +28,9 @@ public sealed class GkEventTimerManager : MonoBehaviour
         if (_instance != null) return;
         if (_isQuitting) return;
         
-        GameObject go = new GameObject("[GkEventTimerManager]");
+        GameObject go = new GameObject("[TimerEventManager]");
         DontDestroyOnLoad(go);
-        _instance = go.AddComponent<GkEventTimerManager>();
+        _instance = go.AddComponent<TimerEventManager>();
     }
     
     private static bool _isQuitting;
@@ -96,7 +96,7 @@ public sealed class GkEventTimerManager : MonoBehaviour
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError("GkEventTimerManager callback error on timer '" + name + "': " + ex);
+                        Debug.LogError("TimerEventManager callback error on timer '" + name + "': " + ex);
                     }
                 }
 
@@ -229,19 +229,19 @@ public sealed class GkEventTimerManager : MonoBehaviour
 // Scaled timer with callback
 
 Start a timer for 10 seconds and log a message when it finishes
-GkEventTimerManager.Start("CountDown_Target02_Monologue", 10f, () =>
+TimerEventManager.Start("CountDown_Target02_Monologue", 10f, () =>
 {
     Debug.Log("Do this when CountDown_Target02_Monologue finishes.");
 });
 
 // Unscaled timer with callback (Runs normally even if Time.timeScale is 0)
-GkEventTimerManager.StartRaw("CountDown_Target02_Monologue", 10f, () =>
+TimerEventManager.StartRaw("CountDown_Target02_Monologue", 10f, () =>
 {
     Debug.Log("Raw timer finished.");
 });
 
-GkEventTimerManager.Start("CountDown_Target02_Monologue", 10f);
-GkEventTimerManager.SetPaused("Go_Execute", false);
-GkEventTimerManager.Stop("CountDown_Target02_Monologue");
-bool active = GkEventTimerManager.IsTimerActive("CountDown_Target02_Monologue");
+TimerEventManager.Start("CountDown_Target02_Monologue", 10f);
+TimerEventManager.SetPaused("Go_Execute", false);
+TimerEventManager.Stop("CountDown_Target02_Monologue");
+bool active = TimerEventManager.IsTimerActive("CountDown_Target02_Monologue");
 */
